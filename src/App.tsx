@@ -1,14 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
   const [todos, setTodos] = useState<string[]>([]);
   const [input, setInput] = useState('');
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  // メモリリークの可能性がある
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+      setTodos((prev) => [...prev.reverse()]);
+    }, 5000);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (input.trim()) {
-      setTodos([...todos, input.trim()]);
+      const newTodos = [...todos, input.trim()].sort().reverse();
+      localStorage.setItem('tempTodo', JSON.stringify(newTodos));
+      setTodos(JSON.parse(localStorage.getItem('tempTodo') || '[]'));
       setInput('');
     }
   };
@@ -19,7 +30,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1>TODOリスト</h1>
+      <h1>TODOリスト - {currentTime.toLocaleTimeString()}</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
