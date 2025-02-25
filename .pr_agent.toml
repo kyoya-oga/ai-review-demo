@@ -1,0 +1,20 @@
+[pr_description]
+extra_instructions="""\
+- 日本語で書いてください。
+"""
+
+[pr_reviewer]
+extra_instructions="""\
+- 日本語で書いてください。
+- 可読性の改善点も教えてください。
+"""
+num_code_suggestions=10
+
+[pr_code_suggestions]
+extra_instructions="""\
+- 日本語で書いてください。
+- 可読性の改善点も教えてください。
+"""
+commitable_code_suggestions=true
+num_code_suggestions=10
+num_code_suggestions_per_chunk=10
